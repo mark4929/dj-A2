@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html >
+    <head>
+        <title>{{name}} Details</title>
+    </head>
+    <style>  
+      td {
+        text-align: center;
+     }
+    </style>
+    <body>
+            <h1> {{name}} </h1>
+            <h4> {{description}} </h4>
+            <p> Swift Code: {{swift_code}} </p>
+            <p> Inst. Number: {{inst_num}} </p>
+            <p> Branches: </p>
+
+        <table>
+                <tr>
+                    <th>Name </th>
+                    <th>Transit Number </th>
+                    <th>Address </th>
+                </tr>
+
+            {% for branch in data %}
+                <tr>
+                    <td> {{branch.name}} </td>
+                    <td> {{branch.transit_num}} </td>
+                    <td> {{branch.address}} </td>
+                </tr>
+            {% empty %}
+                <li>No branch found</li>
+            {% endfor %}
+        </table>
+    </body>
+</html>
