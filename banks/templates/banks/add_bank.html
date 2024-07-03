@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add Bank</title>
+    </head>
+    <style>
+        .field {
+           margin: 1rem;
+         }
+    </style>
+    <body>
+
+       <form method="POST" action="">
+            <div class="field">
+                <label for="name">Name </label>
+                    <span style="color: red">
+                        <ul>
+                            {% for error in name %}
+                                <li> {{error}} </li>
+                            {% endfor%}
+                        </ul>
+                    </span>
+                <input type="text" id="name" name="name" required value={{name_value}} >
+            </div>
+
+            <div class="field">
+                <label for="description">Description </label>
+                    <span style="color: red">
+                        <ul>
+                            {% for error in description %}
+                               <li> {{error}} </li>
+                            {% endfor%}
+                        </ul>
+                    </span>
+               <input type="text" id="description" name="description" required value={{description_value}}>
+            </div>
+
+            <div class="field">
+                <label for="inst_num">Inst_num </label>
+                    <span style="color: red">
+                        <ul>
+                            {% for error in inst_num %}
+                               <li> {{error}} </li>
+                            {% endfor%}
+                        </ul>
+                    </span>
+                <input type="text" id="inst_num" name="inst_num" required value={{inst_num_value}}>
+            </div>
+
+            <div class="field">
+                <label for="swift_code">Swift Code </label>
+                    <span style="color: red">
+                        <ul>
+                            {% for error in swift_code %}
+                              <li> {{error}} </li>
+                            {% endfor%}
+                        </ul>
+                    </span>
+                <input type="text" id="swift_code" name="swift_code" required value={{swift_code_value}}>       
+            </div>
+
+            <div class="field">
+                 <input type="submit" value="Add">
+            </div>
+        </form>
+    </body>
+</html>
