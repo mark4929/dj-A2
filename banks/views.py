@@ -76,23 +76,23 @@ class AddBranch(View):
         user_logged_in = request.user
         url_bank_id = self.kwargs['bank_id']
 
-        # Check if user is logged in
+        # User is logged in ?
         if request.user.is_authenticated:
             pass
         else:
             return HttpResponse('401 UNAUTHORIZED', status=401)
 
-        # context = {'email_value': Branch.get_field(Branch.email).get_default()}
+
         context = {'email_value': 'admin@utoronto.ca'}
 
-        # Check if bank id exists
+        # Bank id exists ?
         if Bank.objects.filter(id=url_bank_id).exists():
             bank = Bank.objects.get(id=url_bank_id)
             bank_owner = bank.owner
         else:
             return HttpResponse('404 NOT FOUND', status=404)
 
-        # Check if logged in user is the owner of the bank
+        # User logged in = Bank owner ?
         if user_logged_in.id == bank_owner.id:
             pass
         else:
@@ -105,20 +105,20 @@ class AddBranch(View):
         user_logged_in = request.user
         url_bank_id = self.kwargs['bank_id']
 
-        # Check if user is logged in
+        # User is logged in ?
         if request.user.is_authenticated:
             pass
         else:
             return HttpResponse('401 UNAUTHORIZED', status=401)
 
-        # Check if bank id exists
+        # Bank id exists ?
         if Bank.objects.filter(id=url_bank_id).exists():
             bank = Bank.objects.get(id=url_bank_id)
             bank_owner = bank.owner
         else:
             return HttpResponse('404 NOT FOUND', status=404)
 
-        # Check if logged in user is the owner of the bank
+        # Logged in user = Bank owner ?
         if user_logged_in.id == bank_owner.id:
             pass
         else:
@@ -190,11 +190,11 @@ class BankIdDetails(View):
     def get(self, request, *args, **kwargs):
         url_bank_id = self.kwargs['bank_id']
 
-        # Check if bank id exists
+        # Bank id exists ?
         if Bank.objects.filter(id=url_bank_id).exists():
             bank = Bank.objects.get(id=url_bank_id)
 
-            # get all branches of this bank
+            # Get Bank branches 
             data = Branch.objects.filter(bank=bank).values()
 
             context = {'id': url_bank_id, 'name': bank.name, 'description': bank.description,
@@ -214,19 +214,19 @@ class BranchIdDetails(View):
 
         url_branch_id = self.kwargs['branch_id']
 
-        # Check if user is logged in
+        # User is logged in ?
         if request.user.is_authenticated:
             pass
         else:
             return HttpResponse('401 UNAUTHORIZED', status=401)
 
-        # Check if branch id exists
+        # Branch id exists ?
         if Branch.objects.filter(id=url_branch_id).exists():
             branch = Branch.objects.get(id=url_branch_id)
         else:
             return HttpResponse('404 NOT FOUND', status=404)
 
-        # get branch data
+        # get data for the branch
         data = {"id": branch.id, "name": branch.name, "transit_num": branch.transit_num, "address": branch.address,
                 "email": branch.email, "capacity": branch.capacity, "last_modified": branch.last_modified}
         return JsonResponse(data)
@@ -247,19 +247,19 @@ class EditBranch(View):
     def get(self, request, *args, **kwargs):
         url_branch_id = self.kwargs['branch_id']
 
-        # Check if user is logged in
+        # User is logged in ?
         if request.user.is_authenticated:
             pass
         else:
             return HttpResponse('401 UNAUTHORIZED', status=401)
 
-        # Check if branch id exists
+       # Branch id exists ?
         if Branch.objects.filter(id=url_branch_id).exists():
             branch = Branch.objects.get(id=url_branch_id)
         else:
             return HttpResponse('404 NOT FOUND', status=404)
 
-        # Check if user is the owner of the corresponding bank
+        # User = Bank owner ?
         bank = branch.bank
         bank_owner = bank.owner
         user_logged_in = request.user
@@ -269,7 +269,7 @@ class EditBranch(View):
         else:
             return HttpResponse('403 FORBIDDEN', status=403)
 
-        # data = Branch.objects.filter(id=url_branch_id).values()
+        
         context = {'name_value': branch.name, 'transit_num_value': branch.transit_num, 'address_value': branch.address,
                    'email_value': branch.email, 'capacity_value': branch.capacity}
 
@@ -279,19 +279,19 @@ class EditBranch(View):
     def post(self, request, *args, **kwargs):
         url_branch_id = self.kwargs['branch_id']
 
-        # Check if user is logged in
+        # User is logged in ?
         if request.user.is_authenticated:
             pass
         else:
             return HttpResponse('401 UNAUTHORIZED', status=401)
 
-        # Check if branch id exists
+        # Branch id exists ?
         if Branch.objects.filter(id=url_branch_id).exists():
             branch = Branch.objects.get(id=url_branch_id)
         else:
             return HttpResponse('404 NOT FOUND', status=404)
 
-        # Check if user that's logged in is the owner of the corresponding bank
+        # User logged  in =  Bank owner ?
         bank = branch.bank
         bank_owner = bank.owner
         user_logged_in = request.user
@@ -301,7 +301,7 @@ class EditBranch(View):
         else:
             return HttpResponse('403 FORBIDDEN', status=403)
 
-        # updated values
+        # Information after editing branch
         name = request.POST.get('name', '')
         transit_num = request.POST.get('transit_num', '')
         address = request.POST.get('address', '')
